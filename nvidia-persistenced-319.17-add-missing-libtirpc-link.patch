@@ -1,0 +1,12 @@
+diff -Naur nvidia-persistenced-319.17/Makefile nvidia-persistenced-319.17.tpg/Makefile
+--- nvidia-persistenced-319.17/Makefile	2013-04-26 05:01:28.000000000 +0000
++++ nvidia-persistenced-319.17.tpg/Makefile	2013-05-15 14:59:29.453686110 +0000
+@@ -102,7 +102,7 @@
+ HOST_CFLAGS += $(common_cflags)
+ 
+ ifneq ($(TARGET_OS),FreeBSD)
+-  LIBS += -ldl
++  LIBS += -ldl -ltirpc
+ endif
+ 
+ ##############################################################################

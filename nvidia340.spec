@@ -1048,8 +1048,6 @@ rmmod nvidia > /dev/null 2>&1 || true
 %{nvidia_libdir}/libGLESv*.%{version}
 %{nvidia_libdir}/libnvidia-eglcore.so.%{version}
 %{nvidia_libdir}/libnvidia-glsi.so.%{version}
-%{nvidia_libdir}/libnvidia-gtk2.so.%{version}
-%{nvidia_libdir}/libnvidia-gtk3.so.%{version}
 %{nvidia_libdir}/libnvidia-glcore.so.%{version}
 %{nvidia_libdir}/libnvidia-cfg.so.%{version}
 %{nvidia_libdir}/libnvidia-fbc.so.%{version}

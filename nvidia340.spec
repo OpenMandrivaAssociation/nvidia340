@@ -212,8 +212,8 @@ Provides:	nvidia97xx-devel = %{version}-%{release}
 Requires:	%{_lib}vdpau-devel
 
 %description -n %{drivername}-devel
-NVIDIA OpenGL/CUDA headers for %cards. This package
-is not required for normal use.
+NVIDIA OpenGL/CUDA headers for %cards.
+This package is not required for normal use.
 
 %package -n %{drivername}-cuda-opencl
 Summary:	CUDA and OpenCL libraries for NVIDIA proprietary driver
@@ -232,9 +232,9 @@ Provides:	libnvcuvid.so.1
 %endif
 
 %description -n %{drivername}-cuda-opencl
-Cuda and OpenCL libraries for NVIDIA proprietary driver. This package is not
-required for normal use, it provides libraries to use NVIDIA cards for High
-Performance Computing (HPC).
+Cuda and OpenCL libraries for NVIDIA proprietary driver.
+This package is not required for normal use, it provides
+libraries to use NVIDIA cards for High Performance Computing (HPC).
 
 # HTML doc splitted off because of size, for live cds:
 %package -n %{drivername}-doc-html

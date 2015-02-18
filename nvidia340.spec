@@ -613,9 +613,6 @@ cat .manifest | tail -n +9 | while read line; do
 		parseparams subdir dest
 		install_symlink nvidia $(get_module_dir $subdir)
 		;;
-	XORG_OUTPUTCLASS_CONFIG)
-		# dont install xorg driver autoloader conf
-		continue
 		;;
 	XMODULE_SYMLINK|GLX_MODULE_SYMLINK)
 		parseparams subdir dest

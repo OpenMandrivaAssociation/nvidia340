@@ -126,7 +126,7 @@ Source package of the NVIDIA proprietary driver. Binary
 packages are named x11-driver-video-nvidia-%{drivername}.
 
 %package -n %{driverpkgname}
-Summary:	NVIDIA proprietary X.org driver and libraries for %cards
+Summary:	NVIDIA proprietary X.org driver and libraries 304.xx
 Group:		System/Kernel and hardware
 Requires(post):	update-alternatives >= 1.9.0
 Requires(postun):	update-alternatives >= 1.9.0

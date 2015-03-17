@@ -16,7 +16,7 @@
 %if !%simple
 # When updating, please add new ids to ldetect-lst (merge2pcitable.pl)
 %define version  340.76
-%define rel 1
+%define rel 2
 # the highest supported videodrv abi
 %define videodrv_abi 19
 %endif
@@ -292,9 +292,9 @@ BUILT_MODULE_NAME[1]="nvidia-uvm"
 BUILT_MODULE_LOCATION[1]="uvm/"
 DEST_MODULE_LOCATION[1]="/kernel/drivers/char/drm"
 %endif
-MAKE[0]="make SYSSRC=\${kernel_source_dir} module"
+MAKE[0]="make CC=gcc SYSSRC=\${kernel_source_dir} module"
 %ifarch x86_64
-MAKE[0]+="; make SYSSRC=\${kernel_source_dir} -C uvm module KBUILD_EXTMOD=\${dkms_tree}/%{drivername}/%{version}-%{release}/build/uvm"
+MAKE[0]+="; make CC=gcc SYSSRC=\${kernel_source_dir} -C uvm module KBUILD_EXTMOD=\${dkms_tree}/%{drivername}/%{version}-%{release}/build/uvm"
 %endif
 CLEAN="make -f Makefile.kbuild clean"
 %ifarch x86_64

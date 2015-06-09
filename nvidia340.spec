@@ -188,9 +188,9 @@ Conflicts:	%{drivername}-cuda-opencl <= 325.15-1
 %package -n dkms-%{drivername}
 Summary:	NVIDIA kernel module for %cards
 Group:		System/Kernel and hardware
-Requires:	dkms
-Requires(post):	dkms
-Requires(preun):	dkms
+Requires:	dkms >= 2.2.0.3.1-3.20130827.8
+Requires(post):	dkms >= 2.2.0.3.1-3.20130827.8
+Requires(preun):	dkms >= 2.2.0.3.1-3.20130827.8
 Obsoletes:	dkms-nvidia < 1:%{version}-%{release}
 Provides:	dkms-nvidia = 1:%{version}-%{release}
 Obsoletes:	dkms-nvidia97xx < %{version}-%{release}

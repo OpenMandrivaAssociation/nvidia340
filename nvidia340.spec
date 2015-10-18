@@ -104,7 +104,6 @@ Patch2:		NVIDIA-Linux-x86_64-346.35-kernel-3.18-fix.patch
 # include xf86vmproto for X_XF86VidModeGetGammaRampSize, fixes build on cooker
 Patch3:		nvidia-settings-include-xf86vmproto.patch
 Patch8:		nvidia-persistenced-319.17-add-missing-libtirpc-link.patch
-Patch9:		nvidia340-fix-build-with-kernel-4.0.patch
 %endif
 License:	Freeware
 URL:		http://www.nvidia.com/object/unix.html

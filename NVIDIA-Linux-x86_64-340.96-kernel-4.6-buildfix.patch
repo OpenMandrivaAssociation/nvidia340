@@ -1,0 +1,69 @@
+
+get_user_pages() got renamed to get_userpages_remote()
+and page_cache_release() got renamed to put_page()
+
+VM_FAULT_MINOR is dropped upstream as it always returns 0
+
+Signed-off-by: Thomas Backlund <tmb@mageia.org>
+
+
+diff -Nurp NVIDIA-Linux-x86_64-340.96.orig/kernel/os-mlock.c NVIDIA-Linux-x86_64-340.96/kernel/os-mlock.c
+--- NVIDIA-Linux-x86_64-340.96.orig/kernel/os-mlock.c	2015-11-09 07:44:53.000000000 +0200
++++ NVIDIA-Linux-x86_64-340.96/kernel/os-mlock.c	2016-04-21 20:39:40.932111205 +0300
+@@ -45,7 +45,11 @@ RM_STATUS NV_API_CALL os_lock_user_pages
+     }
+ 
+     down_read(&mm->mmap_sem);
++#if LINUX_VERSION_CODE < KERNEL_VERSION(4, 6, 0)
+     ret = get_user_pages(current, mm, (unsigned long)address,
++#else
++    ret = get_user_pages_remote(current, mm, (unsigned long)address,
++#endif
+             page_count, write, force, user_pages, NULL);
+     up_read(&mm->mmap_sem);
+     pinned = ret;
+@@ -58,7 +62,11 @@ RM_STATUS NV_API_CALL os_lock_user_pages
+     else if (pinned < page_count)
+     {
+         for (i = 0; i < pinned; i++)
++#if LINUX_VERSION_CODE < KERNEL_VERSION(4, 6, 0)
+             page_cache_release(user_pages[i]);
++#else
++            put_page(user_pages[i]);
++#endif
+         os_free_mem(user_pages);
+         return RM_ERR_INVALID_ADDRESS;
+     }
+@@ -85,7 +93,11 @@ RM_STATUS NV_API_CALL os_unlock_user_pag
+     {
+         if (write)
+             set_page_dirty_lock(user_pages[i]);
++#if LINUX_VERSION_CODE < KERNEL_VERSION(4, 6, 0)
+         page_cache_release(user_pages[i]);
++#else
++        put_page(user_pages[i]);
++#endif
+     }
+ 
+     os_free_mem(user_pages);
+diff -Nurp NVIDIA-Linux-x86_64-340.96.orig/kernel/uvm/nvidia_uvm_lite.c NVIDIA-Linux-x86_64-340.96/kernel/uvm/nvidia_uvm_lite.c
+--- NVIDIA-Linux-x86_64-340.96.orig/kernel/uvm/nvidia_uvm_lite.c	2015-11-09 07:44:53.000000000 +0200
++++ NVIDIA-Linux-x86_64-340.96/kernel/uvm/nvidia_uvm_lite.c	2016-04-21 02:31:08.523966052 +0300
+@@ -42,7 +42,6 @@
+ #error "Building uvmlite code without RM enabled!"
+ #endif
+ 
+-
+ static struct cdev g_uvmlite_cdev;
+ 
+ // table of attached GUIDS
+@@ -785,7 +784,8 @@ int _fault_common(struct vm_area_struct
+         // a reference so that the fault handling logic is correct:
+         //
+         get_page(pTracking->uvmPage);
+-        retValue = VM_FAULT_MINOR;
++        // VM_FAULT_MINOR was dropped, hardcode 0
++        retValue = 0;
+     }
+ 
+     pRecord->isMapped = NV_TRUE;

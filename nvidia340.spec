@@ -15,8 +15,8 @@
 
 %if !%simple
 # When updating, please add new ids to ldetect-lst (merge2pcitable.pl)
-%define version  340.96
-%define rel 3
+%define version  340.98
+%define rel 1
 # the highest supported videodrv abi
 %define videodrv_abi 20
 %endif
@@ -104,7 +104,6 @@ Patch2:		NVIDIA-Linux-x86_64-346.35-kernel-3.18-fix.patch
 # include xf86vmproto for X_XF86VidModeGetGammaRampSize, fixes build on cooker
 Patch3:		nvidia-settings-include-xf86vmproto.patch
 Patch8:		nvidia-persistenced-319.17-add-missing-libtirpc-link.patch
-Patch9:		NVIDIA-Linux-x86_64-340.96-kernel-4.6-buildfix.patch
 %endif
 License:	Freeware
 URL:		http://www.nvidia.com/object/unix.html

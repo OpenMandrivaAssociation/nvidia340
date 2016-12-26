@@ -15,10 +15,10 @@
 
 %if !%simple
 # When updating, please add new ids to ldetect-lst (merge2pcitable.pl)
-%define version  340.96
+%define version  340.101
 %define rel 0.1
 # the highest supported videodrv abi
-%define videodrv_abi 20
+%define videodrv_abi 23
 %endif
 
 %define priority 9851
@@ -103,6 +103,7 @@ Source100:	nvidia340.rpmlintrc
 # include xf86vmproto for X_XF86VidModeGetGammaRampSize, fixes build on cooker
 Patch3:		nvidia-settings-include-xf86vmproto.patch
 Patch8:		nvidia-persistenced-319.17-add-missing-libtirpc-link.patch
+Patch9:		nvidia-kernel-4.9.0.patch
 %endif
 License:	Freeware
 URL:		http://www.nvidia.com/object/unix.html
@@ -264,7 +265,8 @@ sh %{nsource} --extract-only
 
 %if !%simple
 cd %{pkgname}
-%patch9 -p1
+%patch2 -p1
+%patch9 -p0
 cd ..
 %endif
 
@@ -291,9 +293,9 @@ BUILT_MODULE_NAME[1]="nvidia-uvm"
 BUILT_MODULE_LOCATION[1]="uvm/"
 DEST_MODULE_LOCATION[1]="/kernel/drivers/char/drm"
 %endif
-MAKE[0]="make SYSSRC=\${kernel_source_dir} module"
+MAKE[0]="make CC=gcc SYSSRC=\${kernel_source_dir} module"
 %ifarch x86_64
-MAKE[0]+="; make SYSSRC=\${kernel_source_dir} -C uvm module KBUILD_EXTMOD=\${dkms_tree}/%{drivername}/%{version}-%{release}/build/uvm"
+MAKE[0]+="; make CC=gcc SYSSRC=\${kernel_source_dir} -C uvm module KBUILD_EXTMOD=\${dkms_tree}/%{drivername}/%{version}-%{release}/build/uvm"
 %endif
 CLEAN="make -f Makefile.kbuild clean"
 %ifarch x86_64
@@ -820,8 +822,6 @@ echo "%{nvidia_libdir}" > %{buildroot}%{_sysconfdir}/%{drivername}/ld.so.conf
 %ifarch %{biarches}
 echo "%{nvidia_libdir32}" >> %{buildroot}%{_sysconfdir}/%{drivername}/ld.so.conf
 %endif
-install -d -m755 %{buildroot}%{_sysconfdir}/ld.so.conf.d
-touch %{buildroot}%{_sysconfdir}/ld.so.conf.d/GL.conf
 
 # modprobe.conf
 install -d -m755 %{buildroot}%{_sysconfdir}/modprobe.d
@@ -968,7 +968,6 @@ rmmod nvidia > /dev/null 2>&1 || true
 %endif
 
 # ld.so.conf, modprobe.conf, xinit
-%ghost %{_sysconfdir}/ld.so.conf.d/GL.conf
 %ghost %{_sysconfdir}/X11/xinit.d/nvidia-settings.xinit
 %ghost %{_sysconfdir}/modprobe.d/display-driver.conf
 %dir %{_sysconfdir}/%{drivername}

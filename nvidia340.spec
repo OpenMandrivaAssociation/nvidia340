@@ -51,7 +51,7 @@
 # our entries)
 %if %simple
 # nvidia/vesa
-%define ldetect_cards_name NVIDIA GeForce 420 series and later
+%define ldetect_cards_name NVIDIA GeForce 8100 to GeForce 415
 %endif
 
 %define biarches x86_64

@@ -110,6 +110,7 @@ URL:		https://www.nvidia.com/object/unix.html
 Group:		System/Kernel and hardware
 ExclusiveArch:	%{ix86} x86_64
 %if !%simple
+BuildRequires:	make
 BuildRequires:	imagemagick
 BuildRequires:	pkgconfig(vdpau) >= 0.9
 BuildRequires:	pkgconfig(xrender)
